@@ -1,0 +1,14 @@
+.DS_Store
+**/.DS_Store
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Recreated by the notebook; do not redistribute cached Yahoo market data.
+**/data/raw/spy_*.csv
+**/data/raw/vix_*.csv
+**/data/processed/*.csv
+
