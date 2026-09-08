@@ -113,20 +113,23 @@ The event study is descriptive and complementary to the regression analysis; it 
 
 The executed notebook currently finds:
 
-- The `overnight return × FOMC day` interaction is `+0.191` with a HAC p-value of `0.433`; the main price-discovery hypothesis is therefore not supported at conventional significance levels.
-- Scheduled FOMC days are associated with approximately `13.02` basis points higher absolute intraday return, with `p = 0.056`—suggestive evidence at 10%, but not significant at 5%.
+- The `overnight return × FOMC day` interaction is `+0.192` with a HAC p-value of `0.430`; the main price-discovery hypothesis is therefore not supported at conventional significance levels.
+- Scheduled FOMC days are associated with approximately `13.42` basis points higher absolute intraday return, with `p = 0.049`—statistically significant at 5%, though close to the threshold.
 - The interaction changes sign between the 2015–2019 and 2020–2025 subsamples, indicating possible instability.
+- Emergency FOMC market-impact dates are excluded from the baseline rather than incorrectly classified as ordinary trading days.
+- Removing observations flagged by Cook's distance preserves the positive interaction sign, but the estimate remains statistically insignificant (`p = 0.155`).
 - Results should be treated as conditional associations rather than causal effects or measures of monetary-policy surprise.
 
 See the fully executed [analysis notebook](output/jupyter-notebook/fomc_data_and_models.ipynb) for data validation, coefficient tables, interpretations, and robustness checks.
 
 ## Robustness checks
 
-The project is intentionally limited to three pre-specified checks:
+The project uses four focused sensitivity checks:
 
-1. Exclude emergency or unscheduled policy decisions in 2020.
+1. Compare the clean baseline with a specification that includes the two emergency-policy market-impact dates in 2020.
 2. Exclude SPY ex-dividend dates.
-3. Compare the `2015–2019` and `2020–2025` subsamples.
+3. Exclude observations flagged by the conventional Cook's-distance screening rule, without treating the trimmed model as the preferred estimate.
+4. Compare the `2015–2019` and `2020–2025` subsamples.
 
 ## Repository structure
 
@@ -139,7 +142,7 @@ fomc-price-discovery/
 │       ├── fomc_data_and_models.ipynb
 │       ├── data/raw/fomc_scheduled_events_2015_2025.csv
 │       └── outputs/
-│           ├── figures/fomc_event_window.png
+│           ├── figures/      # Event-window and influence diagnostics
 │           └── tables/       # Regression and event-study tables
 ```
 
