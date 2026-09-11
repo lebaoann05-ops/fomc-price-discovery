@@ -46,17 +46,13 @@ The main analysis uses only scheduled announcement dates. Unscheduled or emergen
 
 ## Variable construction
 
-For trading day \(t\):
+For trading day *t*:
 
-$$
-r^{ON}_t = \ln\left(\frac{Open_t}{Close_{t-1}}\right)
-$$
+<p align="center"><i>r</i><sup>ON</sup><sub>t</sub> = ln(<i>Open</i><sub>t</sub> / <i>Close</i><sub>t−1</sub>)</p>
 
-$$
-r^{ID}_t = \ln\left(\frac{Close_t}{Open_t}\right)
-$$
+<p align="center"><i>r</i><sup>ID</sup><sub>t</sub> = ln(<i>Close</i><sub>t</sub> / <i>Open</i><sub>t</sub>)</p>
 
-where \(r^{ON}_t\) is the overnight return and \(r^{ID}_t\) is the intraday return.
+where <i>r</i><sup>ON</sup><sub>t</sub> is the overnight return and <i>r</i><sup>ID</sup><sub>t</sub> is the intraday return.
 
 Additional variables include:
 
@@ -73,23 +69,17 @@ Adjusted prices will be used where appropriate. SPY ex-dividend dates will also 
 
 ### Model 1 — Baseline price-discovery model
 
-$$
-r^{ID}_t = \alpha + \beta r^{ON}_t + \gamma FOMC_t
-+ \delta\left(r^{ON}_t \times FOMC_t\right)
-+ \theta'Controls_t + \varepsilon_t
-$$
+<p align="center"><i>r</i><sup>ID</sup><sub>t</sub> = α + β<i>r</i><sup>ON</sup><sub>t</sub> + γ<i>FOMC</i><sub>t</sub> + δ(<i>r</i><sup>ON</sup><sub>t</sub> × <i>FOMC</i><sub>t</sub>) + θ′<i>Controls</i><sub>t</sub> + ε<sub>t</sub></p>
 
 Key interpretation:
 
-- \(\beta\): overnight–intraday continuation or reversal on non-FOMC days.
-- \(\gamma\): difference in expected intraday return on FOMC days.
-- \(\delta\): change in the overnight–intraday relationship on FOMC days.
+- **β:** overnight–intraday continuation or reversal on non-FOMC days.
+- **γ:** difference in expected intraday return on FOMC days.
+- **δ:** change in the overnight–intraday relationship on FOMC days.
 
 ### Model 2 — Intraday volatility
 
-$$
-|r^{ID}_t| = \alpha + \gamma FOMC_t + \theta'Controls_t + \varepsilon_t
-$$
+<p align="center">|<i>r</i><sup>ID</sup><sub>t</sub>| = α + γ<i>FOMC</i><sub>t</sub> + θ′<i>Controls</i><sub>t</sub> + ε<sub>t</sub></p>
 
 ### Model 3 — Type of policy decision
 
