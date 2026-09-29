@@ -1,0 +1,5 @@
+hypothesis,Wald chi2,df,p-value
+All three slope shifts equal zero,3.446086419844265,3,0.3278221430202721
+All three level shifts equal zero,2.0307232883220196,3,0.5660545212339161
+Level shifts equal across decisions,1.3806089104820243,2,0.5014233848469967
+Slope shifts equal across decisions,3.087292066832086,2,0.21360088398116875

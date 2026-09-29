@@ -1,0 +1,11 @@
+model,test,p-value
+Model 1,Breusch–Pagan heteroskedasticity,1.1790656329391506e-46
+Model 1,White heteroskedasticity,5.212920021584801e-59
+Model 1,Breusch–Godfrey serial correlation (5 lags),1.3946274608149796e-05
+Model 1,ARCH-LM conditional heteroskedasticity (5 lags),3.863979267175107e-44
+Model 1,"Ramsey RESET, HC3 covariance",0.00015298911815561506
+Model 2,Breusch–Pagan heteroskedasticity,4.583777001917783e-18
+Model 2,White heteroskedasticity,1.0563069566419603e-36
+Model 2,Breusch–Godfrey serial correlation (5 lags),1.0455651367394805e-12
+Model 2,ARCH-LM conditional heteroskedasticity (5 lags),8.733999218640187e-11
+Model 2,"Ramsey RESET, HC3 covariance",0.002280533847910406

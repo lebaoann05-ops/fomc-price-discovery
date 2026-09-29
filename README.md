@@ -1,7 +1,7 @@
-# FOMC Announcements and Price Discovery
+# FOMC Announcements and the Overnight–Intraday Return Relationship in the U.S. Stock Market: Evidence from SPY
 
 > **Group 12 — Quantitative Methods for Finance (TCH442)**  
-> *Overnight anticipation and intraday return dynamics in the US stock market*
+> *An empirical study of scheduled FOMC announcement days, 2015–2025*
 
 ## Project overview
 
@@ -42,7 +42,7 @@ Separating these components provides a more informative view of price discovery 
 | FOMC calendar | Scheduled meeting and statement dates | 2015–2025 | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) |
 | Policy decisions | Hike, cut, or hold classification | 2015–2025 | Federal Reserve statements |
 
-The main analysis uses only scheduled announcement dates. Unscheduled or emergency decisions—particularly those in 2020—will be excluded from the baseline and considered separately in a robustness check.
+The main analysis uses only scheduled announcement dates. Two emergency-policy market-impact dates in 2020 are excluded from the baseline and included in a sensitivity check. The cleaned baseline contains 2,764 trading days, including 87 scheduled FOMC days (20 hikes, 9 cuts, 58 holds).
 
 ## Variable construction
 
@@ -63,7 +63,7 @@ Additional variables include:
 - `lagged_vix`: previous trading day's VIX level.
 - Day-of-week and month indicators.
 
-Adjusted prices will be used where appropriate. SPY ex-dividend dates will also be excluded in a robustness check because distributions can mechanically affect measured overnight returns.
+Adjusted SPY Open and Close prices are used consistently. SPY ex-dividend dates are excluded in a sensitivity check because distributions can mechanically affect measured overnight returns.
 
 ## Econometric design
 
@@ -85,7 +85,7 @@ Key interpretation:
 
 The general FOMC indicator will be replaced by `hike`, `cut`, and `hold` indicators and their interactions with the overnight return.
 
-All main regressions will report heteroskedasticity- and autocorrelation-consistent **Newey–West/HAC standard errors**. Statistical significance will be discussed alongside coefficient magnitude and economic significance.
+All main regressions report heteroskedasticity- and autocorrelation-consistent **Newey–West/HAC standard errors** with five lags. The notebook also reports joint Wald tests, model diagnostics and sensitivity to HAC bandwidth. Statistical significance is discussed alongside coefficient magnitude and economic significance.
 
 ## Event-study component
 
@@ -97,29 +97,37 @@ As a supporting analysis, the project will plot average returns within a `[-2, +
 - Cumulative close-to-close return.
 - Comparisons among hike, cut, and hold decisions where sample sizes permit.
 
-The event study is descriptive and complementary to the regression analysis; it is not treated as a separate research project.
+The event window is descriptive. Its cumulative SPY return is not an abnormal return because no independent benchmark or policy-surprise measure is used.
 
 ## Current empirical results
 
 The executed notebook currently finds:
 
 - The `overnight return × FOMC day` interaction is `+0.192` with a HAC p-value of `0.430`; the main price-discovery hypothesis is therefore not supported at conventional significance levels.
-- Scheduled FOMC days are associated with approximately `13.42` basis points higher absolute intraday return, with `p = 0.049`—statistically significant at 5%, though close to the threshold.
+- Scheduled FOMC days are associated with approximately `13.42` basis points higher absolute intraday return, with `p = 0.049` using five HAC lags. The p-value ranges from about `0.048` to `0.053` across 1, 5, 10 and 20 lags, so the 5% threshold conclusion is bandwidth-sensitive.
 - The interaction changes sign between the 2015–2019 and 2020–2025 subsamples, indicating possible instability.
 - Emergency FOMC market-impact dates are excluded from the baseline rather than incorrectly classified as ordinary trading days.
 - Removing observations flagged by Cook's distance preserves the positive interaction sign, but the estimate remains statistically insignificant (`p = 0.155`).
 - Results should be treated as conditional associations rather than causal effects or measures of monetary-policy surprise.
 
+The added joint Wald tests do not reject a zero slope shift across hike/cut/hold decisions as a group. Formal diagnostics reject constant residual variance, no serial correlation, no ARCH effects and the tested functional form. HAC helps inference under the first two issues but does not resolve functional-form misspecification. A supplementary GARCH(1,1) fit illustrates volatility persistence; it does not estimate an FOMC effect.
+
 See the fully executed [analysis notebook](output/jupyter-notebook/fomc_data_and_models.ipynb) for data validation, coefficient tables, interpretations, and robustness checks.
 
 ## Robustness checks
 
-The project uses four focused sensitivity checks:
+The project uses four focused sample sensitivity checks:
 
 1. Compare the clean baseline with a specification that includes the two emergency-policy market-impact dates in 2020.
 2. Exclude SPY ex-dividend dates.
 3. Exclude observations flagged by the conventional Cook's-distance screening rule, without treating the trimmed model as the preferred estimate.
 4. Compare the `2015–2019` and `2020–2025` subsamples.
+
+It also compares HAC maximum lags of 1, 5, 10 and 20 for the two primary coefficients.
+
+## Written report
+
+The course-length [research report](report/Group12_FOMC_Report.md) presents the question, literature, data, models, results, diagnostics, limitations and conclusion. The [Word version](report/Group12_FOMC_Report.docx) contains six result tables and is ready for group editing. The [contribution template](report/CONTRIBUTIONS_TEMPLATE.md) needs the members' actual work, names and signatures before submission.
 
 ## Repository structure
 
@@ -127,13 +135,17 @@ The project uses four focused sensitivity checks:
 fomc-price-discovery/
 ├── README.md
 ├── requirements.txt
-├── outputs/
-│   └── jupyter-notebook/
-│       ├── fomc_data_and_models.ipynb
-│       ├── data/raw/fomc_scheduled_events_2015_2025.csv
-│       └── outputs/
-│           ├── figures/      # Event-window and influence diagnostics
-│           └── tables/       # Regression and event-study tables
+├── report/
+│   ├── Group12_FOMC_Report.md
+│   ├── Group12_FOMC_Report.docx
+│   ├── CONTRIBUTIONS_TEMPLATE.md
+│   └── build_docx.py
+└── output/jupyter-notebook/
+    ├── fomc_data_and_models.ipynb
+    ├── data/raw/fomc_scheduled_events_2015_2025.csv
+    └── outputs/
+        ├── figures/          # Event window, Cook's distance and GARCH
+        └── tables/           # Reproducible model, diagnostic and event tables
 ```
 
 Generated files and downloaded data will be clearly separated from source code. Scripts will use relative paths and a fixed sample end date so the reported results can be reproduced later.
@@ -148,12 +160,12 @@ Generated files and downloaded data will be clearly separated from source code. 
 - [ ] Complete the first progress checkpoint.
 - [x] Estimate the extended models and event-study results.
 - [x] Run the pre-specified robustness checks.
-- [ ] Write the report and contribution statement.
+- [x] Write the report draft; member names and signed contribution statements remain for the team.
 - [ ] Re-run the project from a clean environment before submission.
 
 ## Reproducibility
 
-The final repository will include:
+The repository includes:
 
 - A pinned `requirements.txt` file.
 - A documented Python/Jupyter environment.
@@ -164,7 +176,7 @@ The final repository will include:
 
 ## Current status
 
-**Stage:** Data preparation and preliminary econometric analysis completed.  
+**Stage:** Full report draft and executed econometric analysis completed.
 **Course:** Quantitative Methods for Finance (TCH442).  
 **Team:** Group 12 — four member roles to be added after task allocation.
 

@@ -1,3 +1,4 @@
+arch==8.0.0
 beautifulsoup4==4.12.3
 ipykernel==6.29.5
 matplotlib==3.10.0
@@ -7,4 +8,3 @@ pandas==2.2.3
 requests==2.32.3
 statsmodels==0.14.4
 yfinance==0.2.66
-
